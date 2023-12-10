@@ -1,4 +1,4 @@
-const propiedades_venta = [
+const enVenta = [
     {
         name: 'Apartamento Acogedor en la montaña',
         imgsrc: 'https://cdn.bioguia.com/embed/3d0fb0142790e6b90664042cbafcb1581427139/furgoneta.jpg',
@@ -72,4 +72,17 @@ const propiedades_venta = [
     }
     ]
 
-    
+function renderEnVenta() {
+    let contenedor;
+    let limite;
+
+    if (document.getElementById('ventaIndex')) {
+        contenedor = document.getElementById('ventaIndex');
+        let limite = 3;
+    } else if (document.getElementById('propVenta')) {
+        contenedor = document.getElementById ('propVenta');
+        limite = enVenta.length;
+    };
+
+
+};
