@@ -18,7 +18,7 @@ const enVenta = [
         adress: '123 Luxury Lane, Prestige Suburb, CA 45678',
         room: 4,
         bath: 4,
-        pricce: 5000,
+        price: 5000,
         smoke: false,
         pets: false
     },
@@ -36,7 +36,7 @@ const enVenta = [
     },
 
     {
-        name: 'Casa de playa con ',
+        name: 'Casa de playa con piscina incluida',
         imgsrc: 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/284470727.jpg?k=3caea8c550987cfa81217eee97b43f2a1fe5a2117630b8f76f23f9ce4a81ae79&o=&hp=1',
         desc: 'Casa de veraniego junto a la playa, con piscina incluída.',
         adress: 'Rodovia RJ 102, Arrial do Cabo, CEP 28930',
@@ -61,7 +61,7 @@ const enVenta = [
 
     {
         name: 'Apartamento de lujo junto a la montaña',
-        imgsrc: '',
+        imgsrc: 'https://images.trvl-media.com/lodging/59000000/58110000/58105300/58105277/234ecc74.jpg?impolicy=fcrop&w=1200&h=800&p=1&q=medium',
         desc: 'Apartamento de lujo a los pies de la montaña junto a lago.',
         adress: 'Sta Lucía 2342, Rosario, CA 56789',
         room: 2,
@@ -72,17 +72,82 @@ const enVenta = [
     }
     ]
 
-function renderEnVenta() {
-    let contenedor;
-    let limite;
+//Funciones
 
-    if (document.getElementById('ventaIndex')) {
-        contenedor = document.getElementById('ventaIndex');
-        let limite = 3;
-    } else if (document.getElementById('propVenta')) {
-        contenedor = document.getElementById ('propVenta');
-        limite = enVenta.length;
-    };
+    const contenedor = document.querySelector('#venta .row');
 
-
-};
+    let cards = '';
+    
+    enVenta.forEach(prop => {
+      renderCards(prop)
+    })
+    
+    contenedor.innerHTML = cards
+    
+    function renderCards(prop){
+      let petHTML = checkPets(prop);
+      let smokeHTML = checkSmoke(prop);
+      
+      cards += `
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <img src="${prop.imgsrc}" class="card-img-top" alt="${prop.name}"/>
+          <div class="card-body">
+            <h5 class="card-title">
+            ${prop.name}
+            </h5>
+            <p class="card-text">
+            ${prop.desc}
+            </p>
+            <p>
+            <i class="fas fa-map-marker-alt"></i> 
+            ${prop.adress}
+            </p>
+            <p>
+              <i class="fas fa-bed"></i> 
+              ${prop.room} Habitaciones | 
+              <i class="fas fa-bath"></i> 
+              ${prop.bath} Baños
+            </p>
+            <p><i class="fas fa-dollar-sign"></i> 
+            ${prop.price}
+            </p>
+            ${smokeHTML}
+            ${petHTML}
+          </div>
+        </div>
+      </div>
+      `
+    }
+    
+    function checkPets(propiedad){
+      if (propiedad.pets){
+        return `
+        <p class="text-success">
+        <i class="fas fa-paw"></i> Mascotas permitidas
+        </p>
+        `
+      } else {
+        return `
+        <p class="text-danger">
+        <i class="fa-solid fa-ban"></i> No se permiten mascotas
+        </p>
+        `
+      }
+    }
+    
+    function checkSmoke(propiedad){
+      if (propiedad.smoke){
+        return `
+        <p class="text-success">
+        <i class="fas fa-smoking"></i> Permitido fumar
+        </p>
+        `
+      } else {
+        return `
+        <p class="text-danger">
+        <i class="fas fa-smoking-ban"></i> No se permite fumar
+        </p>
+        `
+      }
+    }
